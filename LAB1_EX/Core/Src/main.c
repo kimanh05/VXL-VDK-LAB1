@@ -141,18 +141,49 @@ int main(void)
 	  	          default: break;
 	  	      }
   }
+
+  clearAllClock();
+
+  int timer_second = 0;
+  int timer_min = 0;
+  int timer_hour = 0;
+
+  int second = 12;
+  int min = 12;
+  int hour = 12;
+
   while (1)
   {
-  	  setNumberOnClock(1);
-  	  setNumberOnClock(2);
-  	  setNumberOnClock(3);
-  	  HAL_Delay(1000);
 
-  	  clearNumberOnClock(1);
-  	  clearNumberOnClock(3);
-  	  HAL_Delay(1000);
+  	  if (timer_second == 500) {
+  		  if (second != min && second != hour) clearNumberOnClock(second);
+  		  timer_second = 0;
+          second++;
+          if (second > 12) second = 1;
+  	  }
+  	  setNumberOnClock(second);
 
 
+  	  if (timer_min == 30000) {
+  		  if (min != second && min != hour) clearNumberOnClock(min);
+  		  timer_min = 0;
+          min++;
+          if (min > 12) min = 1;
+  	  }
+  	  setNumberOnClock(min);
+
+  	  if (timer_hour == 360000) {
+  		  if (hour != second && hour != min) clearNumberOnClock(hour);
+  		  timer_hour = 0;
+          hour++;
+          if (hour > 12) hour = 1;
+  	  }
+  	  setNumberOnClock(hour);
+
+  	  HAL_Delay(10);
+  	  timer_second++;
+  	  timer_min++;
+  	  timer_hour++;
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
