@@ -142,6 +142,7 @@ int main(void)
 	  	      }
   }
 
+  clearAllClock();
   int second = 6;
   int minute = 58;
   int hour = 3;
