@@ -271,9 +271,9 @@ int main(void)
       HAL_Delay(10);
  800026e:	200a      	movs	r0, #10
  8000270:	f000 fa80 	bl	8000774 <HAL_Delay>
-      count += 10;
+      count += 1;
  8000274:	6a3b      	ldr	r3, [r7, #32]
- 8000276:	330a      	adds	r3, #10
+ 8000276:	3301      	adds	r3, #1
  8000278:	623b      	str	r3, [r7, #32]
 
       if (count >= 100) {
