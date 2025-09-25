@@ -179,7 +179,7 @@ int main(void)
 
 
       HAL_Delay(10);
-      count += 10;
+      count += 1;
 
       if (count >= 100) {
           count = 0;
