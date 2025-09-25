@@ -142,53 +142,62 @@ int main(void)
 	  	      }
   }
 
-  clearAllClock();
+  int second = 6;
+  int minute = 58;
+  int hour = 3;
+  int count = 0;
 
-  int timer_second = 0;
-  int timer_min = 0;
-  int timer_hour = 0;
-
-  int second = 12;
-  int min = 12;
-  int hour = 12;
+  int prevSecond = -1;
+  int prevMinute = -1;
+  int prevHour   = -1;
 
   while (1)
   {
 
-  	  if (timer_second == 500) {
-  		  if (second != min && second != hour) clearNumberOnClock(second);
-  		  timer_second = 0;
+      int ledSecond = (second < 5) ? 12 : (second / 5);
+      if (ledSecond != prevSecond && prevSecond != -1) {
+          clearNumberOnClock(prevSecond);
+      }
+      setNumberOnClock(ledSecond);
+      prevSecond = ledSecond;
+
+
+      int ledMinute = (minute / 5 == 0) ? 12 : (minute / 5);
+      if (ledMinute != prevMinute && prevMinute != -1) {
+          clearNumberOnClock(prevMinute);
+      }
+      setNumberOnClock(ledMinute);
+      prevMinute = ledMinute;
+
+
+      int ledHour = (hour % 12 == 0) ? 12 : (hour % 12);
+      if (ledHour != prevHour && prevHour != -1) {
+          clearNumberOnClock(prevHour);
+      }
+      setNumberOnClock(ledHour);
+      prevHour = ledHour;
+
+
+      HAL_Delay(10);
+      count += 10;
+
+      if (count >= 100) {
+          count = 0;
           second++;
-          if (second > 12) second = 1;
-  	  }
-  	  setNumberOnClock(second);
-
-
-  	  if (timer_min == 30000) {
-  		  if (min != second && min != hour) clearNumberOnClock(min);
-  		  timer_min = 0;
-          min++;
-          if (min > 12) min = 1;
-  	  }
-  	  setNumberOnClock(min);
-
-  	  if (timer_hour == 360000) {
-  		  if (hour != second && hour != min) clearNumberOnClock(hour);
-  		  timer_hour = 0;
+      }
+      if (second >= 60) {
+          second = 0;
+          minute++;
+      }
+      if (minute >= 60) {
+          minute = 0;
           hour++;
-          if (hour > 12) hour = 1;
-  	  }
-  	  setNumberOnClock(hour);
+      }
+      if (hour >= 12) hour = 0;
 
-  	  HAL_Delay(10);
-  	  timer_second++;
-  	  timer_min++;
-  	  timer_hour++;
     /* USER CODE END WHILE */
-
     /* USER CODE BEGIN 3 */
   }
-  /* USER CODE END 3 */
 }
 
 /**
